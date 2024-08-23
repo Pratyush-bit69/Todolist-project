@@ -1,0 +1,506 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<ContentNavigationDrawer>
+    MDList:
+        OneLineListItem:
+            text: "Home"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.transition=FadeTransition()
+                root.screen_manager.current = "main"
+        OneLineListItem:
+            text: "Settings"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.transition=FadeTransition()
+                root.screen_manager.current = "settings"
+        OneLineListItem:
+            text:"Theme"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.transition=FadeTransition()
+                root.screen_manager.current = "theme"
+
+
+MDScreen:
+    screen_manager:screen_manager
+    MDTopAppBar:
+        pos_hint: {"top": 1}
+        elevation: 4
+        title: "To do list"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+    MDNavigationLayout:
+        MDScreenManager:
+            id:screen_manager
+            MDScreen:
+                name:"main"
+                MDBoxLayout:
+                    id:Color
+                    size_hint:1,0.8999
+                    size:root.size
+                    pos:self.pos
+                Image:
+                    id:images
+                    source:"images/no.jpg"
+                    pos: self.pos
+                    size_hint:1,.8999
+                    size: root.size
+                    allow_stretch:True
+                    keep_ratio:False
+                    opacity: 1.0
+                MDIconButton:
+                    icon: "pencil"
+                    pos_hint:{"center_x":.95,"center_y":.075}
+                    on_press:
+                        root.screen_manager.current = "task"
+                        root.screen_manager.transition.direction='left'
+
+            MDScreen:
+                name:"task"
+                MDTextField:
+                    id: data
+                    mode:"rectangle"
+                    icon_right:"pencil"
+                    size_hint: .75,None
+                    hint_text: "Enter the task"
+                    pos_hint:{"center_x":.5 , "center_y": .7}
+
+                MDRectangleFlatIconButton:
+                    text:"submit"
+                    pos_hint:{"center_x":.775,"center_y":.5}
+                    size_hint_y:.075
+                    size_hint_x:.2
+                    icon:"book-plus-multiple-outline"
+                    on_press:app.submit()
+
+                MDRectangleFlatIconButton:
+                    id:date
+                    pos_hint:{"center_x":.18, "center_y": .5}
+                    icon:"calendar-edit-outline"
+                    text:"Date"
+                    on_release: app.show_date_picker()
+                    size_hint_y:.075
+                    size_hint_x:.075
+
+                MDRectangleFlatIconButton:
+                    id: button
+                    mode:"rectangle"
+                    size_hint_x:.27
+                    size_hint_y:.075
+                    icon:"pencil"
+                    pos_hint: {"center_x": .52, "center_y": .5}
+                    text:"Choose a template"
+                    on_release: app.menu.open()
+
+                MDRectangleFlatIconButton:
+                    id:clock
+                    pos_hint:{"center_x": .31, "center_y": .5}
+                    text:"Time"
+                    size_hint_y:.075
+                    size_hint_x:.075
+                    icon:"clock-time-four-outline"
+                    on_release: app.show_time_picker()
+
+                Label:
+                    id:time
+                    text:"Time:Set"
+                    pos_hint:{"center_x": .31, "center_y": .6}
+                    color:1,0.65,0,1
+
+                Label:
+                    id:kyahaidate
+                    text:"Date:Pick"
+                    pos_hint:{"center_x": .18, "center_y": .6}
+                    color:1,0.65,0,1
+
+                Label:
+                    id:template
+                    text:"Choose your template"
+                    pos_hint:{"center_x": .22, "center_y": .8}
+                    color:1,0.65,0,1
+
+                MDIconButton:
+                    icon:"keyboard-backspace"
+                    pos_hint:{"center_x":.075,"center_y":.85}
+                    on_press:
+                        root.screen_manager.current = "main"
+                        root.screen_manager.transition.direction = 'right'
+
+
+
+            MDScreen:
+                name: "settings"
+
+                MDBoxLayout:
+                    orientation:"vertical"
+
+                    MDTopAppBar:
+                        title:"Settings"
+                        left_action_items: [["arrow-left-thick", lambda x: nav_drawer.set_state("open")]]
+
+                    ScrollView:
+                        MDList:
+                            id:box
+                            OneLineListItem:
+                                text:"[font=font/02859_ASPHAL1B.ttf][size=30][u]GENERAL[/u][/font][/size]"
+                            OneLineAvatarIconListItem:
+                                text:"[font=font/GothamMedium.ttf]Theme[/font]"
+                                IconLeftWidget:
+                                    icon: "theme-light-dark"
+                                IconRightWidget:
+                                    icon: "" #this is a transparent png image of 188 bytes
+                                    MDSwitch:
+                                        widget_style: "android"
+                                        id: x54
+                                        on_active:app.switch_theme_style()
+                            TwoLineAvatarIconListItem:
+                                id: mm1
+                                text: "[font=font/GothamMedium.ttf]Status Bar[/font]"
+                                secondary_text: "[size=20][font=font/33713_SerpentineBoldItalic.ttf]Disable[/font][/size]"
+                                IconLeftWidget:
+                                    icon:"chart-line"
+                                IconRightWidget:
+                                    icon:""
+                                     #this is a transparent png image of 188 bytes
+                                    MDSwitch:
+                                        widget_style: "android"
+                                        on_active:
+                                            app.save_checked(*args,root.ids.mm1.text,root.ids.mm1.secondary_text,root)
+                            OneLineListItem:
+                                text:"[font=font/02859_ASPHAL1B.ttf][size=30][u]NOTIFICATION[/u][/font][/size]"
+                            MDFlatButton:
+                                id: field
+                                pos_hint: {'center_x':.5,'center_y':.6}
+                                size_hint_x: None
+                                width: "500dp"
+                                text: "[font=font/GothamMedium.ttf][size=28]  Sound[/font][/size]\n  Choose"
+                                on_press:  app.menu_items.open()
+                            OneLineListItem:
+                                text:"[font=font/02859_ASPHAL1B.ttf][size=30][u]ABOUT[/u][/font][/size]"
+                                text_color:1,1,0,1
+                            MDFlatButton:
+                                text:"[font=font/GothamMedium.ttf][size=25]  Invite friends to the app[/size][/font]"
+                                pos_hint:{"center_x":.8,"center_y":.2}
+                                size_hint_x:None
+                                on_press:app.moreapp()
+                            MDFlatButton:
+                                text:"[font=font/GothamMedium.ttf][size=24]  Feedback[/size][/font]"
+                                pos_hint:{"center_x":.8,"center_y":.2}
+                                size_hint_x:None
+                                on_press:app.any_Function()
+                            TwoLineListItem:
+                                text:"[font=font/GothamMedium.ttf]Chutiya[/font]"
+                                secondary_text:"Version 1.00"
+                            OneLineListItem:
+                                text:"[font=font/02859_ASPHAL1B.ttf][size=30][u]FOLLOW US[/u][/font][/size]"
+                            MDFlatButton:
+                                text:"[font=font/GothamMedium.ttf][size=25]  FaceBook[/size][/font]"
+                                pos_hint:{"center_x":.8,"center_y":.2}
+                                size_hint_x:None
+                                on_press:app.facebook()
+                            MDFlatButton:
+                                text:"[font=font/GothamMedium.ttf][size=25]  Instagram[/size][/font]"
+                                pos_hint:{"center_x":.8,"center_y":.2}
+                                size_hint_x:None
+                                on_press:app.instagram()
+                            MDFlatButton:
+                                text:"[font=font/GothamMedium.ttf][size=25]  Twitter[/size][/font]"
+                                pos_hint:{"center_x":.8,"center_y":.2}
+                                size_hint_x:None
+                                on_press:app.twitter()
+
+
+            MDScreen:
+                name:"theme"
+                MDBoxLayout:
+                    orientation:"vertical"
+                    MDTopAppBar:
+                        title: "To Do list"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                    BoxLayout:
+                        size_hint:(1,.25)
+                        MDRectangleFlatIconButton:
+                            icon:"pencil"
+                            text:"ColoR"
+                            size_hint:None,.9
+                            on_press:
+                                root.screen_manager.current = "color"
+                        MDLabel:
+                            pos_hint:{"x":.9,"center_y":.5}
+                            text:"Image"
+                    ScrollView:
+                        size:self.size
+                        GridLayout:
+                            id:layout_content
+                            size_hint_y:None
+                            height:self.minimum_height
+                            width:self.minimum_width
+                            #rows:3
+                            cols:3
+                            row_default_height: '200dp'
+                            row_force_default: True
+                            #column_default_width:'200dp'
+                            #column_force_default:True
+
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.cave()
+                                Image:
+                                    id:cave
+                                    source:"images/cave.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.kmn()
+                                Image:
+                                    id:kmn
+                                    source:"images/kmn.jpeg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.koko()
+                                Image:
+                                    id:koko
+                                    source:"images/koko.jpeg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.lamp()
+                                Image:
+                                    id:lamp
+                                    source:"iamges/lamp.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.no()
+                                Image:
+                                    id:no
+                                    source:"images/no.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.OIP()
+                                Image:
+                                    id:OIP
+                                    source:"images/OIP.jpeg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.pb()
+                                Image:
+                                    id:pb
+                                    source:"images/pb.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.red_space()
+                                Image:
+                                    id:red_space
+                                    source:"images/red space.jpeg.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.snow()
+                                Image:
+                                    id:snow
+                                    source:"images/snow.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.space()
+                                Image:
+                                    id:space
+                                    source:"images/space.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.star()
+                                Image:
+                                    id:star
+                                    source:"images/star.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.starry()
+                                Image:
+                                    id:starry
+                                    source:"images/starry.jpeg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.stone()
+                                Image:
+                                    id:stone
+                                    source:"images/stone.jpg"
+                                    allow_stretch:True
+                            MDFlatButton:
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.2
+                                size_hint_x:.2
+                                on_press:
+                                    root.screen_manager.current = "main"
+                                    app.tree_space()
+                                Image:
+                                    id:tree_space
+                                    source:"images/tree space.jpg"
+                                    allow_stretch:True
+
+            MDScreen:
+                name:"color"
+                MDBoxLayout:
+                    orientation:"vertical"
+                    MDTopAppBar:
+                        title: "To Do list"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                    BoxLayout:
+                        size_hint:(1,.1)
+                        MDIconButton:
+                            icon:"keyboard-backspace"
+                            pos_hint:{"center_x":.075,"center_y":.85}
+                    ScrollView:
+                        size:self.size
+                        GridLayout:
+                            id:layout_content
+                            size_hint_y:None
+                            height:self.minimum_height
+                            width:self.minimum_width
+                            rows:5
+                            cols:5
+                            row_default_height: '150'
+                            spacing:100
+                            row_force_default: True
+
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "aqua"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color:48/255,213/255,200/255
+                                on_press:app.open_color()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "black"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "green"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "orange"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "pink"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "yellow"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "purple"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "red"
+                                on_press:app.open_color_picker()
+                            MDRoundFlatButton:
+                                line_color:0,0,0,0
+                                pos_hint:{"center_x":.21,"center_y":.75}
+                                size_hint_y:.01
+                                size_hint_x:.01
+                                md_bg_color: "blue"
+                                on_press:app.open_color_picker()
+                            MDIconButton:
+                                icon:"pencil"
+
+
+        MDNavigationDrawer:
+            id:nav_drawer
+            radius:(0, 16, 16, 0)
+
+            ContentNavigationDrawer:
+                screen_manager:screen_manager
+                nav_drawer:nav_drawer
