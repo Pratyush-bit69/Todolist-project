@@ -1,56 +1,64 @@
-# To-Do List Application
+﻿# Todolist-project
 
 ## Overview
 
-The To-Do List Application is a user-friendly desktop app built with Kivy and Python. It allows users to efficiently manage their tasks by providing features for task creation, organization, and tracking.
+Project repository containing implementation files and supporting assets.
 
-## Features
+## Tech Stack
 
-- **Task Creation**: Easily add new tasks with details and descriptions.
-- **Task Management**: Edit or remove tasks as needed.
-- **Categorization**: Organize tasks into categories or projects.
-- **Prioritization**: Set task priorities to manage important tasks.
-- **Due Dates & Reminders**: Assign due dates and receive reminders for upcoming tasks.
-- **Search & Filter**: Search and filter tasks to quickly find what you need.
+- Python
+- Kivy
 
-## Installation
+## Repository Contents
 
-To get started with the To-Do List Application, follow these steps:
+- D:\Amd\repos_sync\Todolist-project\.gitignore
+- D:\Amd\repos_sync\Todolist-project\background.kv
+- D:\Amd\repos_sync\Todolist-project\font\02859_ASPHAL1B.ttf
+- D:\Amd\repos_sync\Todolist-project\font\08634_ClarendonBT.ttf
+- D:\Amd\repos_sync\Todolist-project\font\33713_SerpentineBoldItalic.ttf
+- D:\Amd\repos_sync\Todolist-project\font\GothamMedium.ttf
+- D:\Amd\repos_sync\Todolist-project\images\b42a056994234b3eba267188219dddfe.jpg
+- D:\Amd\repos_sync\Todolist-project\images\cave.jpg
+- D:\Amd\repos_sync\Todolist-project\images\hana.jpg
+- D:\Amd\repos_sync\Todolist-project\images\kmn.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\koko.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\lamp.jpg
+- D:\Amd\repos_sync\Todolist-project\images\nature-images..jpg
+- D:\Amd\repos_sync\Todolist-project\images\no.jpg
+- D:\Amd\repos_sync\Todolist-project\images\ocean 2.jpg
+- D:\Amd\repos_sync\Todolist-project\images\OIP.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\pb.jpg
+- D:\Amd\repos_sync\Todolist-project\images\R.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\red space.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\snow.jpg
+- D:\Amd\repos_sync\Todolist-project\images\space.jpg
+- D:\Amd\repos_sync\Todolist-project\images\star.jpg
+- D:\Amd\repos_sync\Todolist-project\images\starry.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\stone.jpg
+- D:\Amd\repos_sync\Todolist-project\images\tree space.jpg
 
-1. **Clone the Repository**
-2. **Navigate to the Project Directory**
-3. **Install Kivy**: Make sure Kivy is installed. For installation instructions, visit the [Kivy website](https://kivy.org/doc/stable/gettingstarted/installation.html).
-4. **Run the App**: Launch the application by running the main Python script.
+## Quick Start
 
-## Usage
+python -m venv .venv
+.venv\\Scripts\\activate   # Windows
+pip install -r requirements.txt
 
-After setting up the app, you can:
+python main.py
 
-- **Create and Manage Tasks**: Add new tasks, edit existing ones, or remove tasks you no longer need.
-- **Organize with Categories**: Use categories to keep your tasks organized by project or type.
-- **Set Priorities and Due Dates**: Prioritize tasks and set due dates to stay on top of your deadlines.
-- **Filter and Search**: Use the search and filter features to easily navigate your task list.
+## Data & Assets
 
-## Contributing
+- D:\Amd\repos_sync\Todolist-project\images\b42a056994234b3eba267188219dddfe.jpg
+- D:\Amd\repos_sync\Todolist-project\images\cave.jpg
+- D:\Amd\repos_sync\Todolist-project\images\hana.jpg
+- D:\Amd\repos_sync\Todolist-project\images\kmn.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\koko.jpeg.jpg
+- D:\Amd\repos_sync\Todolist-project\images\lamp.jpg
+- D:\Amd\repos_sync\Todolist-project\images\nature-images..jpg
+- D:\Amd\repos_sync\Todolist-project\images\no.jpg
+- D:\Amd\repos_sync\Todolist-project\images\ocean 2.jpg
+- D:\Amd\repos_sync\Todolist-project\images\OIP.jpeg.jpg
 
-We welcome contributions! If you’d like to help out:
+## Notes
 
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Commit your changes.
-4. Push to your forked repository.
-5. Submit a Pull Request with a summary of your changes.
-
-## Contact
-
-For any questions or support, please contact [pnandan23@outlook.com](mailto:your.email@example.com).
-
----
-
-## Maintainer Update (March 2026)
-
-This README was refreshed for consistency across repositories in this GitHub profile.
-
-- Documentation baseline updated
-- Project-specific implementation details remain in code and repository history
-
+- README refreshed and standardized on March 2026.
+- Keep this file aligned with actual implementation updates.
